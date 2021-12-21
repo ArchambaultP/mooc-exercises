@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[7]:
 
 
 import numpy as np
@@ -30,10 +30,16 @@ def PIDController(v_0, theta_ref, theta_hat, prev_e, prev_int, delta_t):
         e_int (:double:) current integral error (automatically becomes prev_int_y at next iteration).
     """
     
-    # TODO: these are random values, you have to implement your own PID controller in here
-    omega = np.random.uniform(-8.0, 8.0)
-    e = np.random.random()
-    e_int = np.random.random()
+    e = theta_ref - theta_hat
+    
+    e_int = prev_int + e * delta_t
+    
+    d_e = (e - prev_e) / delta_t
+    
+    kp = 4
+    ki = 0.2
+    kd = 0.1
+    
+    omega = kp*e + ki * e_int + kd * d_e
     
     return [v_0, omega], e, e_int
-

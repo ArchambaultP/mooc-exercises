@@ -2,7 +2,7 @@
 import numpy as np
 import rospy
 import rospkg
-
+from dt_device_utils import DeviceHardwareBrand, get_device_hardware_brand
 from duckietown.dtros import DTROS, NodeType, TopicType, DTParam, ParamType
 from sensor_msgs.msg import CompressedImage, Image
 from duckietown_msgs.msg import Twist2DStamped, EpisodeStart
@@ -105,6 +105,7 @@ class ObjectDetectionNode(DTROS):
             image = image[...,::-1].copy()  # image is bgr, flip it to rgb
 
         old_img = cv2.resize(old_img, (416,416))
+
         image = cv2.resize(image, (416,416))
         bboxes, classes, scores = self.model_wrapper.predict(image)
 
